@@ -33,7 +33,7 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--bone);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body::after{content:"";position:fixed;inset:0;z-index:100;pointer-events:none;opacity:.06;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::after{content:none;display:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 a{color:inherit;text-decoration:none}
 p a,.inline-link{color:var(--bone);text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:3px;transition:text-decoration-color .2s}
 p a:hover,.inline-link:hover{text-decoration-color:var(--clay-2)}
@@ -71,14 +71,13 @@ code,.mono{font-family:var(--mono)}
 .btn-sm{height:36px;padding:0 14px;font-size:.88rem}
 .roll{display:inline-grid;overflow:hidden;height:1.4em;line-height:1.4em}
 .roll span{grid-area:1/1;transition:transform .55s var(--expo)}
-.roll span+span{transform:translateY(105%)}
-.btn:hover .roll span:first-child{transform:translateY(-105%)}
-.btn:hover .roll span+span{transform:none}
+.roll span+span{display:none}
+
 
 /* HERO */
 .hero{position:relative;padding:72px 0 0;isolation:isolate;overflow:hidden}
-.bricks{position:absolute;inset:0;z-index:-2;opacity:.55;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='56'%3E%3Cg fill='none' stroke='%23ece4d8' stroke-opacity='.05'%3E%3Cpath d='M0 .5h120M0 28.5h120M.5 0v28M60.5 28v28'/%3E%3C/g%3E%3C/svg%3E");-webkit-mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.5) 55%,transparent 95%);mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.5) 55%,transparent 95%)}
-.heat{position:absolute;z-index:-1;right:-10%;bottom:-30%;width:70vw;height:70vw;max-width:980px;max-height:980px;border-radius:50%;pointer-events:none;transition:transform 1.2s var(--expo)}
+.bricks{display:none;position:absolute;inset:0;z-index:-2;opacity:.55;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='56'%3E%3Cg fill='none' stroke='%23ece4d8' stroke-opacity='.05'%3E%3Cpath d='M0 .5h120M0 28.5h120M.5 0v28M60.5 28v28'/%3E%3C/g%3E%3C/svg%3E");-webkit-mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.5) 55%,transparent 95%);mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.5) 55%,transparent 95%)}
+.heat{display:none;position:absolute;z-index:-1;right:-10%;bottom:-30%;width:70vw;height:70vw;max-width:980px;max-height:980px;border-radius:50%;pointer-events:none;transition:transform 1.2s var(--expo)}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:64px;align-items:center;padding-bottom:72px}
 @media(max-width:1000px){.hero-grid{grid-template-columns:1fr;gap:40px}.kiln-fig{max-width:460px}}
 h1{font-family:var(--serif);font-weight:400;font-size:clamp(3rem,6.4vw,6.6rem);line-height:.92;letter-spacing:-.025em;margin:0 0 30px;color:var(--bone)}
@@ -108,15 +107,15 @@ h2{font-family:var(--sans);font-weight:600;font-size:clamp(1.8rem,3.4vw,2.6rem);
 .firing{border:1px solid var(--line);border-radius:10px;background:var(--bg-2);padding:22px 22px 0;overflow:hidden}
 .curve{display:block;width:100%;height:auto}
 .curve .grid line{stroke:var(--line);stroke-dasharray:2 6}
-.curve .node circle{fill:var(--bg-2);stroke:var(--line-2);stroke-width:2;transition:stroke .3s,fill .3s}
-.curve .node.on circle{fill:var(--clay);stroke:var(--clay)}
+.curve .node circle{fill:var(--bg-2);stroke:#cfc5b6;stroke-width:1.4;transition:fill .25s}
+.curve .node.on circle{fill:var(--clay-2)}
 .phases{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);margin:0 -22px}
-.phase{padding:18px 18px 22px;border-right:1px solid var(--line);cursor:pointer;text-align:left;background:none;border-top:0;border-bottom:0;border-left:0;color:inherit;font:inherit;transition:background .3s}
+.phase{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;padding:18px 18px 22px;border-right:1px solid var(--line);cursor:pointer;text-align:left;background:none;border-top:0;border-bottom:0;border-left:0;color:inherit;font:inherit;transition:background .3s}
 .phase:last-child{border-right:0}
 .phase:hover{background:var(--raise)}
 .phase h3{margin:0 0 8px;font-family:var(--serif);font-weight:400;font-size:1.6rem;line-height:1}
 .phase ul{margin:0;padding:0;list-style:none;font-family:var(--mono);font-size:.76rem;color:var(--ash);line-height:1.7}
-.phase .go{display:inline-block;margin-top:10px;font-size:.8rem;color:var(--clay-2)}
+.phase .go{display:inline-block;margin-top:auto;padding-top:12px;font-size:.8rem;color:var(--clay-2)}
 @media(max-width:900px){.phases{grid-template-columns:repeat(3,1fr)}.phase:nth-child(3n){border-right:0}.phase:nth-child(-n+3){border-bottom:1px solid var(--line)}}
 @media(max-width:480px){.firing{padding:16px 16px 0}.phases{grid-template-columns:repeat(2,1fr);margin:0 -16px}.phase{border-bottom:1px solid var(--line)}.phase:nth-child(3n){border-right:1px solid var(--line)}.phase:nth-child(2n){border-right:0}}
 
@@ -204,48 +203,24 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:2
 footer nav{display:flex;gap:22px;flex-wrap:wrap}
 footer a:hover{color:var(--bone)}
 
-/* MOTION */
-@media (prefers-reduced-motion:no-preference){
-  .js .rise>span{transform:translateY(108%);transition:transform 1.1s var(--expo);transition-delay:calc(var(--d,0) * 1ms)}
-  .js .rise.in>span{transform:none}
-  .js .fade{opacity:0;transform:translateY(10px);transition:opacity .9s var(--expo),transform .9s var(--expo);transition-delay:calc(var(--d,0) * 1ms)}
-  .js .fade.in{opacity:1;transform:none}
-  .js .row{opacity:0;transform:translateX(-8px);transition:opacity .7s var(--expo),transform .7s var(--expo),background .35s}
-  .js .row.in{opacity:1;transform:none}
-  .js .nav{transform:translateY(-100%);transition:transform .9s var(--expo) .8s,border-color .4s}
-  .js.ready .nav{transform:none}
-  .js .kiln-fig{clip-path:inset(100% 0 0 0);transition:clip-path 1.3s var(--quart) .3s}
-  .js.ready .kiln-fig{clip-path:inset(0 0 0 0)}
-}
 :focus-visible{outline:2px solid var(--clay);outline-offset:3px;border-radius:3px}
 [tabindex="-1"]:focus{outline:none}
 
-/* ANIMATED ILLUSTRATION */
-.flame{fill:url(#flameG);transform-box:fill-box;transform-origin:50% 100%;animation:flick var(--fs,1.3s) ease-in-out var(--fd,0s) infinite alternate;mix-blend-mode:screen}
-@keyframes flick{0%{transform:scale(1,1) skewX(0)}35%{transform:scale(.92,1.12) skewX(-3deg)}70%{transform:scale(1.05,.9) skewX(2deg)}100%{transform:scale(.96,1.06) skewX(-1deg)}}
-.spark{fill:#ffd48a;animation:spark 3s ease-out var(--sd,0s) infinite;opacity:0}
-@keyframes spark{0%{transform:translate(0,0);opacity:0}10%{opacity:1}100%{transform:translate(var(--sx),-120px);opacity:0}}
-.haze path{fill:none;stroke:#e8784a;stroke-width:1.2;stroke-linecap:round;stroke-dasharray:10 8;animation:haze 2.6s linear infinite}
-.haze path:nth-child(2){animation-delay:-.9s}.haze path:nth-child(3){animation-delay:-1.7s}
-@keyframes haze{from{stroke-dashoffset:0;transform:translateY(0)}to{stroke-dashoffset:-36px;transform:translateY(-6px)}}
-.head-ring{transform-box:fill-box;transform-origin:center;animation:ring 1.6s ease-out infinite}
-@keyframes ring{from{transform:scale(1);opacity:.9}to{transform:scale(3.2);opacity:0}}
-.logo .door{transform-box:fill-box;transform-origin:50% 100%;transition:fill .3s}
-.logo:hover .door{fill:#f08a24;animation:door .5s ease-in-out infinite alternate}
-@keyframes door{from{transform:scaleY(1)}to{transform:scaleY(1.12)}}
-
-/* ANIMATED BACKGROUND */
-@property --glow-r{syntax:'<length>';inherits:false;initial-value:380px}
-.bricks-hot{opacity:calc(.25 + var(--kiln-heat,0) * .75);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='56'%3E%3Cg fill='none' stroke='%23e8784a' stroke-opacity='.32'%3E%3Cpath d='M0 .5h120M0 28.5h120M.5 0v28M60.5 28v28'/%3E%3C/g%3E%3C/svg%3E");-webkit-mask-image:radial-gradient(circle var(--glow-r) at var(--hx,78%) var(--hy,55%),#000,transparent 72%);mask-image:radial-gradient(circle var(--glow-r) at var(--hx,78%) var(--hy,55%),#000,transparent 72%);animation:glowR 6s ease-in-out infinite}
-@keyframes glowR{50%{--glow-r:470px}}
-.bricks-low{-webkit-mask-image:linear-gradient(0deg,#000,transparent 85%);mask-image:linear-gradient(0deg,#000,transparent 85%)}
-.note .bricks-hot{-webkit-mask-image:radial-gradient(circle var(--glow-r) at 85% 115%,#000,transparent 72%);mask-image:radial-gradient(circle var(--glow-r) at 85% 115%,#000,transparent 72%);opacity:.7}
-.note .heat{right:-25%;bottom:-70%}
-.heat i{position:absolute;inset:0;border-radius:50%;background:radial-gradient(closest-side,rgba(212,87,42,.16),rgba(212,87,42,.05) 55%,transparent);animation:breathe 7s ease-in-out infinite}
-@keyframes breathe{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.08);opacity:1}}
+/* INK DRAWING */
+.ink{fill:none;stroke:#cfc5b6;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ink .thin{stroke-width:1;opacity:.7}
+.ink .hatch line{stroke-width:.9;opacity:.55}
+.ink .pot{fill:var(--bg);stroke-width:1.5}
+.ink .glowfill{fill:var(--clay);fill-opacity:.17;stroke:none}
+.ink .flame{stroke:var(--clay-2);stroke-width:1.6;transform-box:fill-box;transform-origin:50% 100%}
+.ink .smoke{stroke-width:1.1;opacity:.45}
+.ink .note-line{stroke:var(--ash-2);stroke-width:.9;stroke-dasharray:2 3}
+.ink text{fill:var(--ash);stroke:none;font-family:var(--mono);font-size:11px;letter-spacing:.02em}
 @media (prefers-reduced-motion:no-preference){
-  body::after{inset:-120px;animation:grain .9s steps(5) infinite}
-  @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-40px,25px)}40%{transform:translate(30px,-35px)}60%{transform:translate(-20px,-15px)}80%{transform:translate(45px,30px)}100%{transform:translate(0,0)}}
+  .js .drawing [data-draw]{stroke-dasharray:1;stroke-dashoffset:1}
+  .js .drawing.drawn [data-draw]{stroke-dashoffset:0;transition:stroke-dashoffset 1.1s cubic-bezier(.45,.05,.3,1);transition-delay:var(--dd,0s)}
+  .js .drawing .late{opacity:0;transition:opacity .6s ease}
+  .js .drawing.drawn .late{opacity:1;transition-delay:var(--dd,1.6s)}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
@@ -281,9 +256,6 @@ footer a:hover{color:var(--bone)}
 
 <main>
 <section class="hero" aria-labelledby="hero-title">
-  <div class="bricks"></div>
-  <div class="bricks bricks-hot" id="bricksHot"></div>
-  <div class="heat" id="heat"><i></i></div>
   <div class="wrap">
     <div class="hero-grid">
       <div>
@@ -304,59 +276,44 @@ footer a:hover{color:var(--bone)}
         <p class="fine fade" style="--d:740">Free and MIT licensed. The installer supports Claude Code, Cursor, Codex, GitHub Copilot, Windsurf, Gemini CLI, and other agents that read <code>SKILL.md</code> files.</p>
       </div>
       <figure class="kiln-fig">
-        <svg class="kiln-svg" viewBox="0 -34 420 284" role="img" aria-label="Illustration of a brick kiln with pots inside and fire burning">
+        <svg class="kiln-svg drawing" id="drawing" viewBox="0 -44 400 390" role="img" aria-label="Ink sketch of a brick kiln with pots inside, a small fire, and smoke from the flue">
           <defs>
-            <linearGradient id="fire" x1="0" y1="1" x2="0" y2="0">
-              <stop id="f0" offset="0" stop-color="#3a160b"/><stop id="f1" offset=".55" stop-color="#22120c"/><stop id="f2" offset="1" stop-color="#1a1310"/>
-            </linearGradient>
-            <clipPath id="chamber"><path d="M120 230V128a90 90 0 0 1 180 0v102z"/></clipPath>
-            <filter id="shimmer" x="-10%" y="-10%" width="120%" height="120%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.015 0.07" numOctaves="2" seed="4" result="n">
-                <animate attributeName="baseFrequency" dur="7s" values="0.015 0.07;0.02 0.1;0.015 0.07" repeatCount="indefinite"/>
-              </feTurbulence>
-              <feDisplacementMap in="SourceGraphic" in2="n" scale="7"/>
-            </filter>
-            <radialGradient id="flameG" cx=".5" cy="1" r="1"><stop offset="0" stop-color="#ffe2a3"/><stop offset=".45" stop-color="#f08a24"/><stop offset="1" stop-color="#c2410c" stop-opacity="0"/></radialGradient>
+            <filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2.4"/></filter>
+            <filter id="boil" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence id="boilNoise" type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="1"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter>
+            <clipPath id="door"><path d="M136 318 L136 222 Q139 152 200 150 Q261 152 264 222 L264 318 Z"/></clipPath>
           </defs>
-          <g class="haze" id="haze" opacity="0" transform="translate(0 -10)">
-            <path d="M170 30c6-6 6-12 0-18s-6-12 0-18"/><path d="M210 26c6-6 6-12 0-18s-6-12 0-18"/><path d="M250 30c6-6 6-12 0-18s-6-12 0-18"/>
-          </g>
-          <g stroke="#433931" fill="none" stroke-width="1">
-            <path d="M88 230V128a122 122 0 0 1 244 0v102"/>
-            <path d="M120 230V128a90 90 0 0 1 180 0v102"/>
-            <g id="vous"></g>
-            <path d="M88 160h-30M88 190h-30M88 220h-30M332 160h30M332 190h30M332 220h30M58 130v100M362 130v100M58 130h30M332 130h30"/>
-            <path d="M73 130v30M73 190v30M347 130v30M347 190v30M66 160v30M354 160v30" opacity=".7"/>
-          </g>
-          <path d="M120 230V128a90 90 0 0 1 180 0v102z" fill="url(#fire)"/>
-          <g clip-path="url(#chamber)">
-            <g filter="url(#shimmer)">
-              <rect id="glow" x="120" y="38" width="180" height="192" fill="#d4572a" opacity="0"/>
-              <g id="flames" opacity="0">
-                <path class="flame" style="--fd:0s;--fs:1.4s" d="M128 232c-4-18 6-26 10-40 6 14 14 24 8 40z"/>
-                <path class="flame" style="--fd:.3s;--fs:1.1s" d="M168 232c-6-22 8-34 12-54 8 18 18 34 10 54z"/>
-                <path class="flame" style="--fd:.6s;--fs:1.3s" d="M200 232c-6-26 8-40 14-64 8 22 20 40 10 64z"/>
-                <path class="flame" style="--fd:.15s;--fs:1.2s" d="M236 232c-6-20 8-32 12-50 8 16 18 32 10 50z"/>
-                <path class="flame" style="--fd:.45s;--fs:1.5s" d="M272 232c-4-16 6-24 10-38 6 12 14 22 8 38z"/>
-              </g>
+          <g class="ink" filter="url(#rough)">
+            <path class="glowfill late" style="--dd:1.5s" d="M136 318 L136 222 Q139 152 200 150 Q261 152 264 222 L264 318 Z"/>
+            <g clip-path="url(#door)" filter="url(#boil)" class="late" style="--dd:1.7s">
+              <path class="flame" d="M142 318 C139 302 147 292 145 276 C154 290 158 302 155 318"/>
+              <path class="flame" d="M181 318 C177 298 189 284 186 262 C198 282 201 300 196 318"/>
+              <path class="flame" d="M224 318 C220 298 231 288 229 270 C240 288 243 302 238 318"/>
+              <path class="flame" d="M201 300 C196 282 206 266 204 248 C214 266 215 284 210 300"/>
+              <path class="flame" d="M252 318 C249 306 255 298 254 286 C260 296 262 306 259 318"/>
             </g>
-            <g id="sparks" opacity="0">
-              <circle class="spark" cx="150" cy="210" r="1.4" style="--sd:0s;--sx:6px"/>
-              <circle class="spark" cx="185" cy="214" r="1.1" style="--sd:.9s;--sx:-8px"/>
-              <circle class="spark" cx="214" cy="206" r="1.6" style="--sd:1.7s;--sx:4px"/>
-              <circle class="spark" cx="240" cy="212" r="1.2" style="--sd:.5s;--sx:-5px"/>
-              <circle class="spark" cx="268" cy="208" r="1.3" style="--sd:2.3s;--sx:7px"/>
-              <circle class="spark" cx="200" cy="216" r="1" style="--sd:1.3s;--sx:-3px"/>
+            <path data-draw style="--dd:0s" d="M18 331 C90 329 160 332 230 330 C290 329 340 331 384 330"/>
+            <path data-draw style="--dd:.1s" d="M71 330 C70 290 72 240 73 196 C74 120 120 66 199 61 C279 65 325 118 327 194 C328 240 329 292 329 330"/>
+            <path data-draw style="--dd:.35s" d="M136 330 L136 222 Q139 152 200 150 Q261 152 264 222 L264 330"/>
+            <path data-draw style="--dd:.5s" d="M181 63 C181 50 182 34 182 20 L219 21 C219 34 219 50 220 63"/>
+            <path data-draw style="--dd:.55s" d="M176 20 L225 21"/>
+            <g id="bricks" class="thin"></g>
+            <g id="hatch" class="hatch"></g>
+            <path class="pot" data-draw style="--dd:1s" d="M150 318 C146 302 150 287 158 281 C156 275 154 271 156 266 L172 266 C174 271 172 275 170 281 C178 287 182 302 178 318 Z"/>
+            <path class="pot" data-draw style="--dd:1.1s" d="M189 318 C180 303 182 281 194 272 L222 272 C234 281 236 303 226 318 Z"/>
+            <path data-draw style="--dd:1.15s" d="M201 272 L201 265 L215 265 L215 272"/>
+            <path class="pot" data-draw style="--dd:1.2s" d="M232 318 C230 308 233 302 237 300 L255 300 C259 302 262 308 260 318 Z"/>
+            <path data-draw style="--dd:1.25s" d="M138 318 C170 317 230 319 262 318"/>
+            <path class="thin" data-draw style="--dd:1.3s" d="M160 290 C160 300 161 308 163 314 M200 284 C199 296 200 306 203 313"/>
+            <g filter="url(#boil)" class="late" style="--dd:2s">
+              <path class="smoke" d="M197 14 C190 4 204 -6 196 -16 C189 -25 200 -32 195 -42"/>
+              <path class="smoke" d="M206 12 C212 2 202 -8 210 -18 C216 -26 207 -34 212 -42"/>
             </g>
-            <g fill="#14110f" id="pots" stroke-width="1">
-              <path d="M150 230c-4-20 2-34 8-40 0-6-4-8-4-12h22c0 4-4 6-4 12 6 6 12 20 8 40z"/>
-              <path d="M205 230c-10-14-12-36 0-50h28c12 14 10 36 0 50z"/>
-              <rect x="212" y="172" width="14" height="10" rx="2"/>
-              <path d="M255 230c-3-12 0-24 6-30h20c6 6 9 18 6 30z"/>
+            <g class="late" style="--dd:2.2s">
+              <path class="note-line" d="M224 30 L268 14"/><text x="272" y="17">flue</text>
+              <path class="note-line" d="M246 296 L346 254"/><text x="350" y="257">ware</text>
+              <path class="note-line" d="M146 300 L48 252"/><text x="6" y="249">firebox</text>
             </g>
-            <rect x="120" y="226" width="180" height="4" fill="#14110f"/>
           </g>
-          <path d="M40 230h340" stroke="#6b625a" stroke-width="1.5"/>
         </svg>
         <figcaption class="fade" style="--d:900">Pottery is fired slowly, in stages, so it doesn't crack. The skills ask the same of your agent: understand first, ship last.</figcaption>
       </figure>
@@ -374,13 +331,14 @@ footer a:hover{color:var(--bone)}
       <svg class="curve" viewBox="0 0 1000 250" id="curve" aria-hidden="true">
         <defs>
           <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d4572a" stop-opacity=".24"/><stop offset="1" stop-color="#d4572a" stop-opacity="0"/></linearGradient>
+          <filter id="roughSoft" x="-2%" y="-10%" width="104%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="1" seed="5"/><feDisplacementMap in="SourceGraphic" scale="1.3"/></filter>
           <clipPath id="reveal"><rect id="revealRect" x="0" y="0" width="40" height="250"/></clipPath>
         </defs>
         <g class="grid"><line x1="40" x2="960" y1="230" y2="230"/><line x1="40" x2="960" y1="150" y2="150"/><line x1="40" x2="960" y1="70" y2="70"/></g>
-        <path clip-path="url(#reveal)" fill="url(#area)" d="M40 230 L95 196 L125 196 L255 160 L285 160 L415 122 L445 122 L575 92 L605 92 L735 66 L765 66 L895 48 L960 48 L960 230Z"/>
-        <path id="curvePath" d="M40 230 L95 196 L125 196 L255 160 L285 160 L415 122 L445 122 L575 92 L605 92 L735 66 L765 66 L895 48 L960 48" fill="none" stroke="#e8784a" stroke-width="2.5" stroke-linejoin="round"/>
+        <path clip-path="url(#reveal)" fill="none" stroke="none" d="M40 230 L95 196 L125 196 L255 160 L285 160 L415 122 L445 122 L575 92 L605 92 L735 66 L765 66 L895 48 L960 48 L960 230Z"/>
+        <path id="curvePath" d="M40 230 L95 196 L125 196 L255 160 L285 160 L415 122 L445 122 L575 92 L605 92 L735 66 L765 66 L895 48 L960 48" fill="none" stroke="#cfc5b6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         <g id="nodes"></g>
-        <g id="head" opacity="0"><circle class="head-ring" r="6" fill="none" stroke="#e8784a" stroke-width="1.5"/><circle r="4.5" fill="#ffd9b8"/></g>
+        <g id="head" opacity="0"></g>
       </svg>
       <div class="phases" id="phases"></div>
     </div>
@@ -437,7 +395,7 @@ footer a:hover{color:var(--bone)}
       <p class="fine fade">Skills run with your agent's permissions, so read one before you install it. The installer also shows a security scan; you can see it on <a href="https://skills.sh/KILN-skills/kiln" target="_blank" rel="noopener">skills.sh</a>.</p>
     </div>
     <div class="term fade" aria-label="Real output from installing one Kiln skill">
-      <div class="term-bar"><span>my-project</span><button class="replay" id="replay" type="button">replay</button></div>
+      <div class="term-bar"><span>my-project</span><span>zsh</span></div>
       <div class="term-body" id="term"></div>
       <div class="term-foot">Output from an actual install, trimmed.</div>
     </div>
@@ -445,9 +403,6 @@ footer a:hover{color:var(--bone)}
 </section>
 
 <section class="note" aria-labelledby="note-title">
-  <div class="bricks bricks-low"></div>
-  <div class="bricks bricks-hot"></div>
-  <div class="heat"><i></i></div>
   <div class="wrap">
     <div class="inner">
       <h2 id="note-title" class="fade" style="margin-bottom:26px">Why this exists</h2>
@@ -508,26 +463,31 @@ footer a:hover{color:var(--bone)}
     ['ship','smart-commit','Small, focused commits with Conventional Commit messages, plus PR descriptions from the real diff.','Time to commit or open a PR.'],
   ];
 
-  /* Kiln illustration: heats up once, then idles */
-  let v='';for(let i=0;i<=12;i++){const a=Math.PI*(1-i/12),c=Math.cos(a),s=Math.sin(a);v+=`<line x1="${210+90*c}" y1="${128-90*s}" x2="${210+122*c}" y2="${128-122*s}"/>`}
-  $('#vous').innerHTML=v;
-  const stops=[[20,'#1a1310'],[400,'#3a140a'],[700,'#7a1f0c'],[950,'#c2410c'],[1150,'#f08a24'],[1280,'#ffcf7a']];
-  const hex=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
-  function colorAt(T){for(let i=1;i<stops.length;i++){if(T<=stops[i][0]){const [t0,c0]=stops[i-1],[t1,c1]=stops[i];const k=(T-t0)/(t1-t0),a=hex(c0),b=hex(c1);return `rgb(${a.map((x,j)=>Math.round(x+(b[j]-x)*k)).join(',')})`}}return stops.at(-1)[1]}
-  function setKiln(T){
-    $('#f0').setAttribute('stop-color',colorAt(T));$('#f1').setAttribute('stop-color',colorAt(T*.78));$('#f2').setAttribute('stop-color',colorAt(T*.5));
-    $('#glow').setAttribute('opacity',(Math.max(0,T-700)/580*.18).toFixed(3));
-    const hot=Math.max(0,Math.min(1,(T-350)/900));
-    $('#flames').setAttribute('opacity',(hot*.95).toFixed(3));
-    $('#sparks').setAttribute('opacity',Math.max(0,(T-800)/480).toFixed(3));
-    $('#haze').setAttribute('opacity',(Math.max(0,(T-1000)/280)*.5).toFixed(3));
-    $('#pots').setAttribute('stroke',colorAt(Math.min(1280,T*1.05)));
-    document.documentElement.style.setProperty('--kiln-heat',hot.toFixed(3));
-  }
+  /* Ink sketch: bricks and hatching placed by hand-ish rules, then drawn once */
+  let seed=7;const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280};const j=n=>((rnd()-.5)*n).toFixed(1);
+  let br='';
+  [[78,130],[270,322]].forEach(([x0,x1])=>{
+    for(let y=316,row=0;y>208;y-=21,row++){
+      let x=x0+rnd()*8;
+      while(x<x1-10){const w=12+rnd()*16;if(rnd()>.25)br+=`<path d="M${x.toFixed(1)} ${(y+ +j(1.5)).toFixed(1)} L${(x+w).toFixed(1)} ${(y+ +j(1.5)).toFixed(1)}"/>`;x+=w+6+rnd()*10}
+      for(let k=0;k<2;k++){const vx=x0+8+((row%2)*12)+k*26+rnd()*6;if(vx<x1-4&&rnd()>.3)br+=`<path d="M${vx.toFixed(1)} ${y} L${(vx+ +j(1.5)).toFixed(1)} ${y-12-rnd()*5}"/>`}
+    }});
+  for(let a=10;a<=170;a+=14+rnd()*4){const t=a*Math.PI/180,c=Math.cos(t),si=Math.sin(t),r1=66+rnd()*2,r2=86+rnd()*5;
+    br+=`<path d="M${(200-r1*c).toFixed(1)} ${(220-r1*si*1.08).toFixed(1)} L${(200-r2*c).toFixed(1)} ${(220-r2*si*1.08).toFixed(1)}"/>`}
+  $('#bricks').innerHTML=br;
+  let ht='';for(let x=276;x<326;x+=6.5){for(let y=206+rnd()*8;y<322;y+=24+rnd()*10){if(rnd()>.35)ht+=`<line x1="${x}" y1="${(y+12).toFixed(1)}" x2="${(x+9).toFixed(1)}" y2="${y.toFixed(1)}"/>`}}
+  for(let x=226;x<300;x+=6){const y=(196-Math.sqrt(Math.max(0,4900-(x-262)**2))*.5+rnd()*10).toFixed(1);if(rnd()>.4)ht+=`<line x1="${x}" y1="${+y+9}" x2="${x+7}" y2="${y}"/>`}
+  $('#hatch').innerHTML=ht;
+  const drawing=$('#drawing');
+  let dd=.6;drawing.querySelectorAll('#bricks path, #hatch line').forEach((el,i)=>{el.setAttribute('data-draw','');el.style.setProperty('--dd',(dd+(i%40)*.012).toFixed(3)+'s')});
+  drawing.querySelectorAll('[data-draw]').forEach(el=>el.setAttribute('pathLength','1'));
   function fire(){
-    if(reduce){setKiln(1280);return}
-    const t0=performance.now(),D=2600;
-    (function step(now){const k=Math.min((now-t0)/D,1),e=1-Math.pow(1-k,3);setKiln(20+1260*e);if(k<1)requestAnimationFrame(step)})(t0);
+    drawing.classList.add('drawn');
+    if(reduce)return;
+    // "boiling" lines: hand-drawn animation feel at ~8 frames per second
+    const noise=$('#boilNoise'),flames=[...drawing.querySelectorAll('.flame')];let f=0;
+    setInterval(()=>{if(document.hidden)return;f=(f+1)%4;noise.setAttribute('seed',String(f+1));
+      flames.forEach(fl=>{fl.style.transform=`scale(${(.94+rnd()*.12).toFixed(2)},${(.86+rnd()*.26).toFixed(2)}) skewX(${j(8)}deg)`})},125);
   }
 
   /* Stages curve */
@@ -626,10 +586,10 @@ footer a:hover{color:var(--bone)}
     timers.forEach(clearTimeout);timers=[];
     term.innerHTML=LINES.map(([h])=>`<div class="l">${h||'&nbsp;'}</div>`).join('');
     const els=term.querySelectorAll('.l');
-    if(reduce){els.forEach(e=>e.classList.add('on'));return}
+    els.forEach(e=>e.classList.add('on'));return;
     let t=250;els.forEach((el,i)=>{timers.push(setTimeout(()=>el.classList.add('on'),t));t+=LINES[i][1]});
   }
-  $('#replay').addEventListener('click',play);
+  
   let played=false;
   new IntersectionObserver((en,o)=>{if(en[0].isIntersecting&&!played){played=true;play();o.disconnect()}},{threshold:.4}).observe(term);
 
@@ -643,28 +603,19 @@ footer a:hover{color:var(--bone)}
   /* Reveals */
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15,rootMargin:'0px 0px -60px 0px'});
   document.querySelectorAll('section:not(.hero) .rise, section:not(.hero) .fade').forEach(el=>io.observe(el));
-  const rowIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.row').forEach((r,i)=>{r.style.transitionDelay=(i*70)+'ms';r.classList.add('in')});rowIO.unobserve(e.target)}}),{threshold:.1});
+  const rowIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.row').forEach(r=>r.classList.add('in'));rowIO.unobserve(e.target)}}),{threshold:.1});
   list.querySelectorAll('.group').forEach(g=>rowIO.observe(g));
   requestAnimationFrame(()=>{
     document.querySelectorAll('.hero .rise, .hero .fade').forEach(el=>el.classList.add('in'));
     document.documentElement.classList.add('ready');
-    setTimeout(fire,reduce?0:650);
+    setTimeout(fire,reduce?0:150);
   });
 
   /* Scroll + pointer */
-  const nav=$('#nav'),heat=$('#heat');let ticking=false;
+  const nav=$('#nav');let ticking=false;
   function onScroll(){nav.classList.toggle('scrolled',scrollY>8);scrub();ticking=false}
   addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
   addEventListener('resize',scrub);onScroll();
-  if(!reduce&&matchMedia('(pointer:fine)').matches){
-    const hero=$('.hero'),hot=$('#bricksHot');let tx=78,ty=55,cx=78,cy=55,raf=0;
-    function follow(){cx+=(tx-cx)*.06;cy+=(ty-cy)*.06;hot.style.setProperty('--hx',cx+'%');hot.style.setProperty('--hy',cy+'%');
-      heat.style.transform=`translate(${(cx-78)*6}px,${(cy-55)*4}px)`;
-      raf=(Math.abs(tx-cx)+Math.abs(ty-cy)>.05)?requestAnimationFrame(follow):0}
-    hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();tx=(e.clientX-r.left)/r.width*100;ty=(e.clientY-r.top)/r.height*100;if(!raf)raf=requestAnimationFrame(follow)},{passive:true});
-    hero.addEventListener('pointerleave',()=>{tx=78;ty=55;if(!raf)raf=requestAnimationFrame(follow)});
-  }
-
   /* In-page links: scroll without adding #section to the URL */
   function goTo(id){
     const el=id?document.getElementById(id):null;
