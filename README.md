@@ -22,20 +22,18 @@ npx skills add KILN-skills/kiln --skill code-review
 
 Or copy any folder from [`skills/`](skills) into your agent's skills directory (for Claude Code: `~/.claude/skills/` or `.claude/skills/` in your project).
 
-## The firing schedule
+## How the skills are grouped
 
-| Phase | Command | Skills |
-|---|---|---|
-| Understand | `/understand` | `codebase-onboard`, `website-visual-inspector` |
-| Design | `/design` | `motion-direction`, `visual-assets` |
-| Build | `/build` | `ui-polish`, `react-motion`, `scroll-animation`, `web-3d` |
-| Test | `/test` | `test-writer`, `debug-root-cause`, `visual-qa` |
-| Review | `/review` | `code-review`, `safe-refactor`, `a11y-audit`, `web-performance` |
-| Ship | `/ship` | `seo-setup`, `ship-website`, `smart-commit` |
+| Stage | Skills |
+|---|---|
+| Understand | `codebase-onboard`, `website-visual-inspector` |
+| Design | `motion-direction`, `visual-assets` |
+| Build | `ui-polish`, `react-motion`, `scroll-animation`, `web-3d` |
+| Test | `test-writer`, `debug-root-cause`, `visual-qa` |
+| Review | `code-review`, `safe-refactor`, `a11y-audit`, `web-performance` |
+| Ship | `seo-setup`, `ship-website`, `smart-commit` |
 
-Extra commands: `/speed` (web performance audit) and `/tidy` (refactor without changing behavior).
-
-You don't need to call the skills by name. Your agent picks the right one from what you ask, for example "review this diff", "the site is slow", or "add tests for this function".
+The stages are only a way to organize the list. You don't call skills by name or by command: describe the task, for example "review this diff", "the site is slow", or "add tests for this function", and your agent loads the skill whose description matches.
 
 ## Skills
 
