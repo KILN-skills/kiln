@@ -273,6 +273,7 @@ footer a:hover{color:var(--bone)}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 :focus-visible{outline:2px solid var(--clay);outline-offset:3px;border-radius:3px}
+[tabindex="-1"]:focus{outline:none}
 </style>
 <script>document.documentElement.classList.add('js')</script>
 </head>
@@ -716,6 +717,26 @@ footer a:hover{color:var(--bone)}
     hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();tx=(e.clientX-r.left)/r.width*100;ty=(e.clientY-r.top)/r.height*100;if(!raf)raf=requestAnimationFrame(follow)},{passive:true});
     hero.addEventListener('pointerleave',()=>{tx=74;ty=62;if(!raf)raf=requestAnimationFrame(follow)});
   }
+
+  /* ---------- In-page links: scroll without adding #section to the URL ---------- */
+  function goTo(id){
+    const el=id?document.getElementById(id):null;
+    if(id&&!el)return false;
+    if(el){el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+      if(!el.hasAttribute('tabindex'))el.setAttribute('tabindex','-1');
+      el.focus({preventScroll:true});}
+    else scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+    return true;
+  }
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a[href^="#"]');
+    if(!a||e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0)return;
+    if(goTo(a.getAttribute('href').slice(1)))e.preventDefault();
+  });
+  // an old shared link like /kiln/#catalog still lands on the section, then the URL is cleaned
+  if(location.hash){const id=decodeURIComponent(location.hash.slice(1));
+    history.replaceState(null,'',location.pathname+location.search);
+    addEventListener('load',()=>setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView()},50));}
 
   const mb=$('#menuBtn'),mm=$('#mobileMenu');
   mb.addEventListener('click',()=>{const o=mm.classList.toggle('open');mb.setAttribute('aria-expanded',String(o))});
