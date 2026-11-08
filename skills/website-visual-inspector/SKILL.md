@@ -1,6 +1,6 @@
 ---
 name: website-visual-inspector
-description: See what a website looks like (desktop and mobile screenshots) and break down its background — colors, gradients, images, video, canvas, ::before/::after pseudo-elements, overlays, and the color palette. Use when the user says "look at this website", "check how it looks", "what's the background on this site", "clone/copy this design", "grab the colors/gradient from this site", or gives a URL and asks about its visuals (also in Indonesian: "lihat website ini", "cek tampilan", "background website apa", "tiru desain").
+description: See what a website looks like (desktop and mobile screenshots) and break down its background — colors, gradients, images, video, canvas, ::before/::after pseudo-elements, overlays, and the color palette. Use when the user says "look at this website", "check how it looks", "what's the background on this site", "clone/copy this design", "grab the colors/gradient from this site", or gives a URL and asks about its visuals (also in Indonesian, such as "lihat website ini", "cek tampilan", "background website apa", "tiru desain").
 allowed-tools: Bash, Read, Write
 ---
 
