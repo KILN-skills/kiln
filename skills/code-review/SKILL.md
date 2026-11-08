@@ -52,23 +52,23 @@ Don't claim something is a bug unless you can explain the input that triggers it
 ## 5. Output format
 
 ```
-## Ringkasan
-<1–2 kalimat: apa yang diubah dan penilaian keseluruhan: ✅ siap merge / ⚠️ perlu perbaikan / ❌ jangan merge>
+## Summary
+<1–2 sentences: what changed and the overall verdict: ✅ ready to merge / ⚠️ needs fixes / ❌ don't merge>
 
-## 🔴 Blocker
-- `path/file.ts:42` — <masalah>. <kenapa berbahaya>.
-  Fix: <kode perbaikan singkat>
+## 🔴 Blockers
+- `path/file.ts:42` — <the problem>. <why it's dangerous>.
+  Fix: <short code fix>
 
-## 🟡 Sebaiknya diperbaiki
+## 🟡 Should fix
 ...
 
-## 🟢 Saran
+## 🟢 Suggestions
 ...
 
-## Yang sudah bagus
-<1–3 poin spesifik — bukan basa-basi>
+## What's already good
+<1–3 specific points, not filler>
 ```
 
-Match the user's language (Indonesian or English). Omit empty sections. Max ~10 findings; if more, keep the most important and say how many minor ones were left out.
+Write the report in the user's language (for example, Indonesian if they wrote in Indonesian); translate the headings too. Omit empty sections. Max ~10 findings; if more, keep the most important and say how many minor ones were left out.
 
 Offer to apply the fixes — don't edit files unless the user asks.

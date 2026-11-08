@@ -49,10 +49,10 @@ Only move to a fix when one hypothesis is **proven**. If all are killed, go back
 ## 6. Report
 
 ```
-**Akar masalah:** <1–2 kalimat, sebutkan file:baris>
-**Bukti:** <apa yang membuktikannya — output, test>
-**Perbaikan:** <apa yang diubah dan kenapa di situ>
-**Pencegahan:** <test yang ditambahkan / pola serupa yang ditemukan>
+**Root cause:** <1–2 sentences, name file:line>
+**Evidence:** <what proves it — output, a test>
+**Fix:** <what changed and why there>
+**Prevention:** <test added / similar patterns found>
 ```
 
-Match the user's language.
+Write the report in the user's language (for example, Indonesian if they wrote in Indonesian); translate the headings too.

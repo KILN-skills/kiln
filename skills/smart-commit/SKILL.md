@@ -45,16 +45,16 @@ Bad: `update files`, `fix bug`, `WIP`
 ## 4. PR description (when asked)
 Base it on `git log main..HEAD` and `git diff main...HEAD`:
 ```
-## Apa & Kenapa
+## What and why
 <problem and solution in 2–4 sentences>
 
-## Perubahan
+## Changes
 - <grouped by area>
 
-## Cara Test
+## How to test
 - [ ] <concrete steps a reviewer can follow>
 
-## Catatan
+## Notes
 <risks, migrations, env vars, screenshots for UI, follow-ups>
 ```
 If `gh` is available and the user wants it, `gh pr create --title ... --body-file ...`.

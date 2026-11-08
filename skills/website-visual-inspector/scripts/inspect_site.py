@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 """
-inspect_site.py — Lihat tampilan website + ekstrak semua background-nya.
+inspect_site.py — Screenshot a website and extract all of its backgrounds.
 
-Output (di folder --out):
+Output (in the --out folder):
   screenshot_desktop.png      full-page screenshot 1440px
   screenshot_mobile.png       full-page screenshot 390px (iPhone-ish)
-  viewport_desktop.png        hanya bagian layar pertama (above the fold)
-  backgrounds.json            daftar semua elemen yang punya background
-  backgrounds/                file gambar/video background yang berhasil diunduh
-  palette.json                warna background yang paling sering dipakai
-  report.md                   ringkasan yang mudah dibaca Claude
+  viewport_desktop.png        only the first screen (above the fold)
+  backgrounds.json            every element that has a background
+  backgrounds/                background image/video files that downloaded
+  palette.json                the most-used background colors
+  report.md                   a short summary that's easy for an agent to read
 
-Pemakaian:
+Usage:
   python3 inspect_site.py https://example.com
-  python3 inspect_site.py https://example.com --out hasil --no-mobile --wait 3000
-  python3 inspect_site.py ./index.html            (file lokal juga bisa)
+  python3 inspect_site.py https://example.com --out result --no-mobile --wait 3000
+  python3 inspect_site.py ./index.html            (local files work too)
 """
 import argparse
 import json
@@ -35,10 +35,10 @@ for _stream in (sys.stdout, sys.stderr):
 try:
     from playwright.sync_api import sync_playwright
 except ImportError:
-    sys.exit("Playwright belum terpasang. Jalankan:\n"
+    sys.exit("Playwright is not installed. Run:\n"
              "  pip install playwright && python -m playwright install chromium")
 
-# JavaScript yang dijalankan di halaman untuk mengumpulkan semua background
+# JavaScript run in the page to collect every background
 COLLECT_JS = r"""
 () => {
   const out = [];
@@ -89,7 +89,7 @@ COLLECT_JS = r"""
     }
   }
 
-  // Video & canvas yang dipakai sebagai background (biasanya posisi absolute/fixed, besar, di belakang)
+  // Video and canvas used as backgrounds (usually absolute/fixed, large, behind content)
   const media = [];
   for (const v of document.querySelectorAll('video')) {
     const r = v.getBoundingClientRect(); const cs = getComputedStyle(v);
@@ -102,10 +102,10 @@ COLLECT_JS = r"""
   for (const c of document.querySelectorAll('canvas')) {
     const r = c.getBoundingClientRect(); const cs = getComputedStyle(c);
     if (r.width * r.height < 40000) continue;
-    media.push({ kind: 'canvas (kemungkinan animasi WebGL/particles)', selector: sel(c),
+    media.push({ kind: 'canvas (likely a WebGL/particle animation)', selector: sel(c),
       position: cs.position, zIndex: cs.zIndex, rect: { w: Math.round(r.width), h: Math.round(r.height) } });
   }
-  // <img> besar dengan object-fit: cover di posisi absolute = background "palsu" yang umum
+  // a large <img> with object-fit: cover and absolute position is a common "fake" background
   for (const im of document.querySelectorAll('img')) {
     const r = im.getBoundingClientRect(); const cs = getComputedStyle(im);
     if (cs.objectFit === 'cover' && ['absolute', 'fixed'].includes(cs.position) && r.width > 400) {
@@ -114,7 +114,7 @@ COLLECT_JS = r"""
     }
   }
 
-  // CSS variables di :root yang berhubungan dengan warna/background
+  // CSS variables on :root related to color/background
   const vars = {};
   const rootCs = getComputedStyle(document.documentElement);
   for (const sheet of document.styleSheets) {
@@ -146,7 +146,7 @@ def safe_name(url: str, i: int) -> str:
 
 
 def auto_scroll(page):
-    """Scroll pelan-pelan sampai bawah supaya lazy-load & animasi scroll ikut ter-render."""
+    """Scroll slowly to the bottom so lazy-loaded content and scroll animations render."""
     page.evaluate("""async () => {
       await new Promise(res => {
         let y = 0; const step = innerHeight * 0.8;
@@ -159,7 +159,7 @@ def auto_scroll(page):
 
 
 def dismiss_overlays(page):
-    """Coba tutup cookie banner umum supaya tidak menutupi screenshot (pilih opsi yang paling privat)."""
+    """Try to close common cookie banners so they don't cover the screenshot (picks the most private option). Includes Indonesian labels."""
     for label in ["Reject all", "Tolak semua", "Decline", "Only necessary", "Necessary only", "Close", "Tutup"]:
         try:
             btn = page.get_by_role("button", name=re.compile(label, re.I)).first
@@ -185,10 +185,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("url")
     ap.add_argument("--out", default="site-inspect")
-    ap.add_argument("--wait", type=int, default=1500, help="ms tunggu setelah load (animasi/font)")
+    ap.add_argument("--wait", type=int, default=1500, help="ms to wait after load (animations/fonts)")
     ap.add_argument("--no-mobile", action="store_true")
-    ap.add_argument("--no-download", action="store_true", help="jangan unduh file gambar background")
-    ap.add_argument("--dark", action="store_true", help="render dengan prefers-color-scheme: dark")
+    ap.add_argument("--no-download", action="store_true", help="don't download background image files")
+    ap.add_argument("--dark", action="store_true", help="render with prefers-color-scheme: dark")
     args = ap.parse_args()
 
     url = args.url
@@ -218,7 +218,7 @@ def main():
         page.screenshot(path=str(out / "screenshot_desktop.png"), full_page=True)
         data = page.evaluate(COLLECT_JS)
 
-        # Unduh gambar background lewat konteks browser (cookie/referer ikut)
+        # Download background images through the browser context (cookies/referer included)
         downloaded = {}
         if not args.no_download:
             urls = []
@@ -231,7 +231,7 @@ def main():
                     if u.startswith("file://"):
                         # Only copy local files when inspecting a local page, never for a web page.
                         if not url.startswith("file://"):
-                            downloaded[u] = "DILEWATI: file lokal dari halaman web"
+                            downloaded[u] = "SKIPPED: local file referenced by a web page"
                             continue
                         src = Path(url2pathname(urlparse(u).path))
                         f = out / "backgrounds" / safe_name(u, i)
@@ -244,7 +244,7 @@ def main():
                         f.write_bytes(r.body())
                         downloaded[u] = str(f.relative_to(out))
                 except Exception as e:
-                    downloaded[u] = f"GAGAL: {e.__class__.__name__}"
+                    downloaded[u] = f"FAILED: {e.__class__.__name__}"
         data["downloaded"] = downloaded
 
         if not args.no_mobile:
@@ -263,7 +263,7 @@ def main():
             mctx.close()
         browser.close()
 
-    # Palet: warna background berbobot luas area
+    # Palette: background colors weighted by area
     weight = Counter()
     for bg in data["backgrounds"]:
         if bg["backgroundColor"]:
@@ -274,17 +274,17 @@ def main():
     (out / "backgrounds.json").write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
     (out / "palette.json").write_text(json.dumps(palette, indent=2), encoding="utf-8")
 
-    # Laporan ringkas
+    # Short report
     big = sorted(data["backgrounds"], key=lambda b: -b["rect"]["w"] * b["rect"]["h"])
-    L = [f"# Inspeksi visual: {data['title'] or data['url']}", "",
+    L = [f"# Visual inspection: {data['title'] or data['url']}", "",
          f"- URL: {data['url']}",
-         f"- Ukuran halaman: {data['pageSize']['w']}×{data['pageSize']['h']} px",
+         f"- Page size: {data['pageSize']['w']}×{data['pageSize']['h']} px",
          f"- Background `html`: {to_hex(data['htmlBackground'])} · `body`: {to_hex(data['bodyBackground'])}",
-         f"- Skema warna saat render: {scheme}", "",
-         "## Screenshot", "- `viewport_desktop.png` (layar pertama)", "- `screenshot_desktop.png` (full page)"]
+         f"- Color scheme used: {scheme}", "",
+         "## Screenshot", "- `viewport_desktop.png` (first screen)", "- `screenshot_desktop.png` (full page)"]
     if not args.no_mobile:
         L.append("- `screenshot_mobile.png` (full page, 390px)")
-    L += ["", "## Palet background (berdasarkan luas area)"]
+    L += ["", "## Background palette (by area)"]
     L += [f"- {p['color']} — {p['areaShare']*100:.1f}%" for p in palette]
 
     grads = [b for b in data["backgrounds"] if b["isGradient"]]
@@ -292,19 +292,19 @@ def main():
     L += ["", f"## Gradient ({len(grads)})"]
     for b in grads[:15]:
         L.append(f"- `{b['selector']}` ({b['rect']['w']}×{b['rect']['h']}): `{b['backgroundImage'][:300]}`")
-    L += ["", f"## Gambar background ({len(imgs)})"]
+    L += ["", f"## Background images ({len(imgs)})"]
     for b in imgs[:25]:
         for u in b["imageUrls"]:
             L.append(f"- `{b['selector']}` → {u[:150]}  \n  size={b['size']}, position={b['position']}, "
                      f"repeat={b['repeat']}, attachment={b['attachment']}"
                      + (f", file=`{downloaded[u]}`" if u in downloaded else ""))
-    L += ["", f"## Video / canvas / img sebagai background ({len(data['media'])})"]
+    L += ["", f"## Video / canvas / img used as background ({len(data['media'])})"]
     for m in data["media"]:
         L.append(f"- {m['kind']}: `{m['selector']}` {json.dumps({k: v for k, v in m.items() if k not in ('kind', 'selector')})}")
     fx = [b for b in data["backgrounds"]
           if b["attachment"] == "fixed" or b["backdropFilter"] or b["filter"]
           or (b["blendMode"] and b["blendMode"] != "normal")]
-    L += ["", f"## Efek ({len(fx)})"]
+    L += ["", f"## Effects ({len(fx)})"]
     for b in fx[:15]:
         bits = []
         if b["attachment"] == "fixed": bits.append("parallax (attachment: fixed)")
@@ -312,20 +312,20 @@ def main():
         if b["filter"]: bits.append(f"filter: {b['filter']}")
         if b["blendMode"] and b["blendMode"] != "normal": bits.append(f"blend-mode: {b['blendMode']}")
         L.append(f"- `{b['selector']}`: " + ", ".join(bits))
-    L += ["", "## 10 elemen ber-background terbesar"]
+    L += ["", "## 10 largest elements with a background"]
     for b in big[:10]:
         desc = b["backgroundImage"][:120] if b["backgroundImage"] else to_hex(b["backgroundColor"])
         L.append(f"- `{b['selector']}` {b['rect']['w']}×{b['rect']['h']} @y={b['rect']['y']}: {desc}")
     color_vars = {k: v for k, v in data["cssVariables"].items()
                   if re.search(r"#|rgb|hsl|oklch|gradient|color|bg|background", k + v, re.I)}
     if color_vars:
-        L += ["", "## CSS variables warna/background"]
+        L += ["", "## Color/background CSS variables"]
         L += [f"- `{k}`: {v}" for k, v in list(color_vars.items())[:40]]
     (out / "report.md").write_text("\n".join(L) + "\n", encoding="utf-8")
 
-    print(f"Selesai → {out.resolve()}")
-    print(f"  {len(data['backgrounds'])} elemen ber-background, {len(grads)} gradient, "
-          f"{len(imgs)} gambar, {len(data['media'])} media")
+    print(f"Done → {out.resolve()}")
+    print(f"  {len(data['backgrounds'])} elements with a background, {len(grads)} gradients, "
+          f"{len(imgs)} images, {len(data['media'])} media")
 
 
 if __name__ == "__main__":

@@ -24,26 +24,26 @@ Pick the most central feature (or the one the user cares about) and follow it: r
 
 ## 4. Output
 ```
-## Gambaran singkat
-<apa project ini, untuk siapa, stack utama — 2–3 kalimat>
+## Overview
+<what the project is, who it's for, main stack — 2–3 sentences>
 
-## Cara menjalankan
-<install, env yang dibutuhkan, dev, test, build — perintah persis dari repo>
+## How to run it
+<install, required env vars, dev, test, build — exact commands from the repo>
 
-## Struktur penting
-<hanya folder/file yang penting, dengan 1 baris peran masing-masing>
+## Key structure
+<only the folders/files that matter, one line on each one's role>
 
-## Alur utama
-<trace dari langkah 3, berupa langkah bernomor dengan file:fungsi>
+## Main flow
+<the trace from step 3, as numbered steps with file:function>
 
-## Konvensi & jebakan
-<pola yang dipakai repo ini; hal yang mudah salah>
+## Conventions and pitfalls
+<patterns this repo uses; things that are easy to get wrong>
 
-## Kalau mau mengubah X, mulai dari…
-<pointer ke file konkret, kalau user menyebut tugasnya>
+## To change X, start at…
+<pointers to concrete files, if the user named a task>
 ```
 
-Use a Mermaid diagram only if the flow has more than ~4 hops or branches. Match the user's language. Mark anything inferred rather than read as "(dugaan)".
+Use a Mermaid diagram only if the flow has more than ~4 hops or branches. Write the report in the user's language (for example, Indonesian if they wrote in Indonesian); translate the headings too. Mark anything inferred rather than read as "(guess)".
 
 ## 5. Optional: save it
 Offer to write the summary to `CLAUDE.md` in the repo root (append, don't overwrite existing content) so future Claude Code sessions start with this context.
