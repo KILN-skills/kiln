@@ -101,6 +101,10 @@ h1 em{font-style:normal;color:var(--clay-2);padding-bottom:.08em;background:url(
 .copy.ok{color:var(--ok)}
 .cta{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
 .fine{margin:18px 0 0;font-size:.88rem;color:var(--ash);max-width:520px}
+.token{padding:90px 0 100px;border-top:1px solid var(--line)}
+.token p{font-size:1.05rem;line-height:1.6;color:var(--bone-2);max-width:560px;margin:18px 0 0}
+.token .cmd.ca{max-width:600px}
+.token .fine{font-size:.88rem;color:var(--ash)}
 .kiln-fig{margin:0}
 .kiln-svg{display:block;width:100%;height:auto}
 .kiln-fig figcaption{margin-top:14px;font-size:.88rem;color:var(--ash);line-height:1.5;max-width:340px}
@@ -253,6 +257,7 @@ footer a:hover{color:var(--bone)}
       <a class="ul" href="#stages">How it works</a><a class="ul" href="#skills">Skills</a><a class="ul" href="#inside">Inside a skill</a><a class="ul" href="#install">Install</a>
     </nav>
     <div class="nav-right">
+      <a class="gh ul" href="#token">$KILN</a>
       <a class="gh ul" href="https://x.com/usekilnskills" target="_blank" rel="noopener" aria-label="Kiln on X">X</a>
       <a class="gh ul" href="https://github.com/KILN-skills/kiln" target="_blank" rel="noopener">GitHub</a>
       <a class="btn btn-solid btn-sm" href="#install"><span class="roll"><span>Install</span><span aria-hidden="true">Install</span></span></a>
@@ -261,7 +266,7 @@ footer a:hover{color:var(--bone)}
   </div>
 </header>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#stages">How it works</a><a href="#skills">Skills</a><a href="#inside">Inside a skill</a><a href="#install">Install</a><a href="https://github.com/KILN-skills/kiln" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/usekilnskills" target="_blank" rel="noopener">X (Twitter)</a>
+  <a href="#stages">How it works</a><a href="#skills">Skills</a><a href="#inside">Inside a skill</a><a href="#install">Install</a><a href="#token">$KILN</a><a href="https://github.com/KILN-skills/kiln" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/usekilnskills" target="_blank" rel="noopener">X (Twitter)</a>
 </div>
 
 <main>
@@ -426,12 +431,24 @@ footer a:hover{color:var(--bone)}
     </div>
   </div>
 </section>
+
+<section class="token" id="token" aria-labelledby="token-title">
+  <div class="wrap">
+    <h2 id="token-title" class="fade">$KILN</h2>
+    <p class="fade">The Kiln token lives on Robinhood Chain. Always check the contract address below before you trade; anything else using the name is not ours.</p>
+    <div class="cmd ca fade">
+      <span class="p">CA</span><code>0x1b552a8cef9ded939401d7768d379a683bba0ce9</code>
+      <button class="copy" type="button" aria-label="Copy token contract address">copy</button>
+    </div>
+    <p class="fine fade"><a href="https://robinhoodchain.blockscout.com/token/0x1b552a8cef9ded939401d7768d379a683bba0ce9" target="_blank" rel="noopener">View on the Robinhood Chain explorer ↗</a> · The skills stay free and MIT-licensed; you don't need the token to use them.</p>
+  </div>
+</section>
 </main>
 
 <footer>
   <div class="wrap">
     <a href="#" class="logo" aria-label="Kiln home"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 28V15.5a11 11 0 0 1 22 0V28" fill="none" stroke="currentColor" stroke-width="2"/><path class="door" d="M12.5 28v-5.5a3.5 3.5 0 0 1 7 0V28z" fill="#d4572a"/><path d="M3 28h26" stroke="currentColor" stroke-width="2"/></svg><b>kiln</b></a>
-    <nav><a class="ul" href="https://github.com/KILN-skills/kiln" target="_blank" rel="noopener">GitHub</a><a class="ul" href="https://skills.sh/KILN-skills/kiln" target="_blank" rel="noopener">skills.sh</a><a class="ul" href="https://x.com/usekilnskills" target="_blank" rel="noopener">X @usekilnskills</a><a class="ul" href="https://github.com/KILN-skills/kiln/issues" target="_blank" rel="noopener">Report a problem</a></nav>
+    <nav><a class="ul" href="https://github.com/KILN-skills/kiln" target="_blank" rel="noopener">GitHub</a><a class="ul" href="https://skills.sh/KILN-skills/kiln" target="_blank" rel="noopener">skills.sh</a><a class="ul" href="https://x.com/usekilnskills" target="_blank" rel="noopener">X @usekilnskills</a><a class="ul" href="https://robinhoodchain.blockscout.com/token/0x1b552a8cef9ded939401d7768d379a683bba0ce9" target="_blank" rel="noopener">$KILN</a><a class="ul" href="https://github.com/KILN-skills/kiln/issues" target="_blank" rel="noopener">Report a problem</a></nav>
     <span>MIT license</span>
   </div>
 </footer>
@@ -605,7 +622,7 @@ footer a:hover{color:var(--bone)}
 
   /* Copy */
   document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{
-    const text=btn.parentElement.querySelector('.install').textContent;
+    const text=btn.parentElement.querySelector('code').textContent;
     try{await navigator.clipboard.writeText(text)}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(_){}ta.remove()}
     btn.classList.add('ok');btn.textContent='copied';setTimeout(()=>{btn.classList.remove('ok');btn.textContent='copy'},1600);
   }));
