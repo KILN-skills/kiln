@@ -15,6 +15,12 @@ import os
 import re
 import sys
 
+
+# Windows consoles default to a legacy code page; force UTF-8 so symbols in the report print instead of crashing.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+
 EXTS = (".js", ".jsx", ".ts", ".tsx", ".mjs", ".vue", ".svelte", ".astro", ".css", ".scss")
 SKIP = {"node_modules", ".git", "dist", "build", ".next", ".nuxt", "out", ".astro", "coverage", ".svelte-kit"}
 LAYOUT = r"(?:top|left|right|bottom|width|height|margin(?:Top|Left|Right|Bottom)?|padding)"

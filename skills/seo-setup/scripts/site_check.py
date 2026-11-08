@@ -11,6 +11,12 @@ import sys
 from collections import defaultdict
 from html.parser import HTMLParser
 
+# Windows consoles default to a legacy code page; force UTF-8 so symbols in the report print instead of crashing.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+
+
 SKIP_DIRS = {"node_modules", ".git", ".venv", "venv", "__pycache__"}
 
 
