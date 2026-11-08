@@ -2,7 +2,7 @@
 
 **Senior engineering habits, forged into your AI agent.**
 
-Website: https://kiln-skills.github.io/kiln/
+Website: https://usekilns.com/
 
 Kiln is a set of 18 skills that make AI coding agents work the way an experienced engineer does: understand the code first, then design, build in thin slices, test, review, and only then ship. Each skill is a structured workflow with steps, checkpoints, and exit criteria, not just a prompt.
 
